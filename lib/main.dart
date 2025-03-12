@@ -2,15 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'navigation/Route.dart';
 import 'theme/app_colors.dart';
 import 'theme/theme_bloc.dart';
+import 'package:flutterhelloworld/user_profile.dart';
+import 'repository/user_profile_repository.dart';
+import 'block/onboarding_bloc.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  Hive.registerAdapter(UserProfileAdapter());
+  final box = await Hive.openBox<UserProfile>('userProfileBox');
+  final repository = UserProfileRepository(box);
+
   runApp(
-    BlocProvider(
-      create: (context) => ThemeBloc(),
+    MultiBlocProvider(
+      providers: [
+        BlocProvider<ThemeBloc>(
+          create: (context) => ThemeBloc(),
+        ),
+        BlocProvider<OnboardingBloc>(
+          create: (context) => OnboardingBloc(repository: repository)..add(LoadUserProfile()),
+        ),
+      ],
       child: const MyApp(),
     ),
   );
@@ -125,7 +141,7 @@ class MyApp extends StatelessWidget {
               behavior: SnackBarBehavior.floating,
             ),
           ),
-          themeMode: state.themeMode, // Используем themeMode из BLoC
+          themeMode: state.themeMode,
         );
       },
     );
