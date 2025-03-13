@@ -9,17 +9,24 @@ import 'theme/theme_bloc.dart';
 import 'package:flutterhelloworld/user_profile.dart';
 import 'repository/user_profile_repository.dart';
 import 'block/onboarding_bloc.dart';
+import 'package:flutterhelloworld/nutrition_profile.dart';
+import 'screens/home/block/home_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   Hive.registerAdapter(UserProfileAdapter());
+  Hive.registerAdapter(NutritionProfileAdapter()); // Регистрация адаптера для NutritionProfile
   final box = await Hive.openBox<UserProfile>('userProfileBox');
+  final nutritionBox = await Hive.openBox<NutritionProfile>('nutritionProfileBox');
   final repository = UserProfileRepository(box);
 
   runApp(
     MultiBlocProvider(
       providers: [
+        BlocProvider<HomeBloc>(
+          create: (context) => HomeBloc(),
+        ),
         BlocProvider<ThemeBloc>(
           create: (context) => ThemeBloc(),
         ),

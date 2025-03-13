@@ -2,6 +2,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import '../repository/user_profile_repository.dart';
 import 'package:flutterhelloworld/user_profile.dart';
+import 'package:flutterhelloworld/nutrition_profile.dart';
+import 'package:hive/hive.dart';
 
 /*part 'onboarding_event.dart';
 part 'onboarding_state.dart';*/
@@ -34,7 +36,41 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
       isFemale: event.isFemale,
     );
     await repository.saveProfile(updatedProfile);
+
+    // Расчёт КБЖУ
+    final nutritionProfile = _calculateNutritionProfile(updatedProfile);
+    await Hive.box<NutritionProfile>('nutritionProfileBox').put('nutrition', nutritionProfile);
+
     emit(OnboardingLoaded(profile: updatedProfile));
+  }
+
+  NutritionProfile _calculateNutritionProfile(UserProfile profile) {
+    // Расчёт BMR (формула Миффлина-Сан Жеора)
+    double bmr;
+    if (profile.isFemale) {
+      bmr = (10 * profile.weight) + (6.25 * profile.height) - (5 * profile.age) - 161;
+    } else {
+      bmr = (10 * profile.weight) + (6.25 * profile.height) - (5 * profile.age) + 5;
+    }
+
+    // Умножаем BMR на уровень активности
+    final totalCalories = bmr * profile.activityLevel;
+
+    // Распределение макронутриентов
+    final proteinCalories = totalCalories * 0.25; // 25% калорий на белки
+    final fatCalories = totalCalories * 0.25;     // 25% калорий на жиры
+    final carbCalories = totalCalories * 0.50;    // 50% калорий на углеводы
+
+    final protein = double.parse((proteinCalories / 4).toStringAsFixed(1)); // 1 г белка = 4 ккал, с точностью до 1 знака
+    final fat = double.parse((fatCalories / 9).toStringAsFixed(1));         // 1 г жира = 9 ккал, с точностью до 1 знака
+    final carbs = double.parse((carbCalories / 4).toStringAsFixed(1));      // 1 г углевода = 4 ккал, с точностью до 1 знака
+
+    return NutritionProfile(
+      calories: double.parse(totalCalories.toStringAsFixed(1)), // Калории с точностью до 1 знака
+      protein: protein,
+      fat: fat,
+      carbs: carbs,
+    );
   }
 }
 

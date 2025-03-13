@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../../theme/app_colors.dart';
 import '../../block/onboarding_bloc.dart';
-import 'package:flutterhelloworld/user_profile.dart';
 
 class OnboardingScreen1 extends StatefulWidget {
   const OnboardingScreen1({super.key});
@@ -73,30 +72,40 @@ class _OnboardingScreen1State extends State<OnboardingScreen1> {
           canPop: false,
           child: Scaffold(
             backgroundColor: AppColors.getBackground(context),
-            appBar: AppBar(
-              elevation: 0,
-              backgroundColor: AppColors.getBackground(context),
-              actions: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextButton(
-                    onPressed: () => context.go('/onboarding2'),
-                    child: Text(
-                      'Skip',
-                      style: TextStyle(color: AppColors.getTextSubtitle(context)),
-                    ),
-                  ),
-                ),
-              ],
-            ),
             body: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              //padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 50.0),
+              padding: const EdgeInsets.fromLTRB(16.0, 140.0, 16.0, 18.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Column(
                     children: [
+                      // Индикатор прогресса (2 шага онбординга)
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: 10, // Ширина точки
+                            height: 10, // Высота точки
+                            margin: const EdgeInsets.symmetric(horizontal: 4), // Отступ между точками
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: AppColors.getPrimary(context),
+                            ),
+                          ),
+                          Container(
+                            width: 10, // Ширина точки
+                            height: 10, // Высота точки
+                            margin: const EdgeInsets.symmetric(horizontal: 4), // Отступ между точками
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: AppColors.getText(context).withOpacity(0.3),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 20), // Отступ между индикатором и заголовком
                       Text(
                         'Let’s Get Started!',
                         style: TextStyle(

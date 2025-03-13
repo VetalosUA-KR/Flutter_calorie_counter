@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../../theme/app_colors.dart';
 import '../../block/onboarding_bloc.dart';
-import 'package:flutterhelloworld/user_profile.dart';
 
 class OnboardingScreen2 extends StatefulWidget {
   const OnboardingScreen2({super.key});
@@ -87,6 +86,31 @@ class _OnboardingScreen2State extends State<OnboardingScreen2> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
+                          // Индикатор прогресса (2 шага онбординга)
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                width: 10, // Ширина точки
+                                height: 10, // Высота точки
+                                margin: const EdgeInsets.symmetric(horizontal: 4), // Отступ между точками
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: AppColors.getText(context).withOpacity(0.3),
+                                ),
+                              ),
+                              Container(
+                                width: 10, // Ширина точки
+                                height: 10, // Высота точки
+                                margin: const EdgeInsets.symmetric(horizontal: 4), // Отступ между точками
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: AppColors.getPrimary(context),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 20), // Отступ между индикатором и заголовком
                           // Заголовок
                           Text(
                             'Activity Level',
