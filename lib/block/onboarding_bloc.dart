@@ -14,6 +14,12 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
     on<UpdateUserProfile>(_onUpdateUserProfile);
   }
 
+  /*@override
+  void onTransition(Transition<OnboardingEvent, OnboardingState> transition) {
+    print('Transition from ${transition.currentState} to ${transition.nextState}');
+    super.onTransition(transition);
+  }*/
+
   Future<void> _onLoadUserProfile(LoadUserProfile event, Emitter<OnboardingState> emit) async {
     final profile = repository.getProfile();
     emit(OnboardingLoaded(profile: profile));

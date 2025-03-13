@@ -13,6 +13,45 @@ class OnboardingScreen1 extends StatefulWidget {
 }
 
 class _OnboardingScreen1State extends State<OnboardingScreen1> {
+
+  int _height = 170; // Начальное значение роста
+  int _weight = 70;  // Начальное значение веса
+  int _age = 25;     // Начальное значение возраста
+  bool _isFemale = true; // Состояние для пола (false = Male, true = Female)
+
+  final maxHeight = 220;
+  final minHeight = 130;
+  final maxWeight = 220;
+  final minWeight = 30;
+  final maxAge = 100;
+  final minAge = 10;
+
+  // Функции для изменения значений
+  void _updateHeight(int value) {
+    setState(() {
+      _height = value.clamp(minHeight, maxHeight);
+    });
+  }
+
+  void _updateWeight(int value) {
+    setState(() {
+      _weight = value.clamp(minWeight, maxWeight);
+    });
+  }
+
+  void _updateAge(int value) {
+    setState(() {
+      _age = value.clamp(minAge, maxAge);
+    });
+  }
+
+  void _toggleGender(bool value) {
+    setState(() {
+      _isFemale = value; // Прямое обновление состояния (true = Female, false = Male)
+    });
+  }
+
+
   @override
   void initState() {
     super.initState();
@@ -72,44 +111,29 @@ class _OnboardingScreen1State extends State<OnboardingScreen1> {
                         children: [
                           _buildSelectorBlock(
                             title: 'Height (cm)',
-                            value: profile.height,
+                            value: _height,
                             minValue: 130,
                             maxValue: 220,
-                            onValueChanged: (value) => context.read<OnboardingBloc>().add(UpdateUserProfile(
-                              height: value,
-                              weight: profile.weight,
-                              age: profile.age,
-                              isFemale: profile.isFemale,
-                            )),
-                            controller: FixedExtentScrollController(initialItem: profile.height - 130),
+                            onValueChanged: _updateHeight,
+                            controller: FixedExtentScrollController(initialItem: _height - 130),
                           ),
                           const SizedBox(width: 16),
                           _buildSelectorBlock(
                             title: 'Weight (kg)',
-                            value: profile.weight,
+                            value: _weight,
                             minValue: 30,
                             maxValue: 220,
-                            onValueChanged: (value) => context.read<OnboardingBloc>().add(UpdateUserProfile(
-                              height: profile.height,
-                              weight: value,
-                              age: profile.age,
-                              isFemale: profile.isFemale,
-                            )),
-                            controller: FixedExtentScrollController(initialItem: profile.weight - 30),
+                            onValueChanged: _updateWeight,
+                            controller: FixedExtentScrollController(initialItem: _weight - 30),
                           ),
                           const SizedBox(width: 16),
                           _buildSelectorBlock(
                             title: 'Age',
-                            value: profile.age,
+                            value: _age,
                             minValue: 10,
                             maxValue: 100,
-                            onValueChanged: (value) => context.read<OnboardingBloc>().add(UpdateUserProfile(
-                              height: profile.height,
-                              weight: profile.weight,
-                              age: value,
-                              isFemale: profile.isFemale,
-                            )),
-                            controller: FixedExtentScrollController(initialItem: profile.age - 10),
+                            onValueChanged: _updateAge,
+                            controller: FixedExtentScrollController(initialItem: _age - 10),
                           ),
                         ],
                       ),
@@ -129,13 +153,8 @@ class _OnboardingScreen1State extends State<OnboardingScreen1> {
                           children: [
                             const Text('Male'),
                             Switch(
-                              value: profile.isFemale,
-                              onChanged: (value) => context.read<OnboardingBloc>().add(UpdateUserProfile(
-                                height: profile.height,
-                                weight: profile.weight,
-                                age: profile.age,
-                                isFemale: value,
-                              )),
+                              value: _isFemale,
+                              onChanged: _toggleGender,
                               activeColor: AppColors.getPrimary(context),
                               activeTrackColor: AppColors.getPrimary(context).withOpacity(0.5),
                               inactiveThumbColor: Colors.grey,
@@ -156,6 +175,12 @@ class _OnboardingScreen1State extends State<OnboardingScreen1> {
                         print('Weight: ${profile.weight} kg');
                         print('Age: ${profile.age} years');
                         print('Gender: ${profile.isFemale ? 'Female' : 'Male'}');
+                        context.read<OnboardingBloc>().add(UpdateUserProfile(
+                          height: _height,
+                          weight: _weight,
+                          age: _age,
+                          isFemale: _isFemale,
+                        ));
                         context.go('/onboarding2');
                       },
                       style: ElevatedButton.styleFrom(
