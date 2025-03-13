@@ -20,14 +20,15 @@ class UserProfileAdapter extends TypeAdapter<UserProfile> {
       height: fields[0] as int,
       weight: fields[1] as int,
       age: fields[2] as int,
-      isFemale: fields[3] as bool,
+      activityLevel: fields[3] as double,
+      isFemale: fields[4] as bool,
     );
   }
 
   @override
   void write(BinaryWriter writer, UserProfile obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.height)
       ..writeByte(1)
@@ -35,6 +36,8 @@ class UserProfileAdapter extends TypeAdapter<UserProfile> {
       ..writeByte(2)
       ..write(obj.age)
       ..writeByte(3)
+      ..write(obj.activityLevel)
+      ..writeByte(4)
       ..write(obj.isFemale);
   }
 

@@ -14,12 +14,16 @@ class UserProfile extends HiveObject {
   int age;
 
   @HiveField(3)
+  double activityLevel;
+
+  @HiveField(4)
   bool isFemale;
 
   UserProfile({
     required this.height,
     required this.weight,
     required this.age,
+    required this.activityLevel,
     required this.isFemale,
   });
 
@@ -28,10 +32,11 @@ class UserProfile extends HiveObject {
     height: 170,
     weight: 70,
     age: 25,
+    activityLevel: 1.375,
     isFemale: true,
   );
 
   // Преобразование в строку для отладки
   @override
-  String toString() => 'UserProfile(height: $height, weight: $weight, age: $age, isFemale: $isFemale)';
+  String toString() => 'UserProfile(height: $height, weight: $weight, age: $age, activityLevel: $activityLevel, isFemale: $isFemale)';
 }

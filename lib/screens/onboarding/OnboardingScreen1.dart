@@ -17,6 +17,7 @@ class _OnboardingScreen1State extends State<OnboardingScreen1> {
   int _height = 170; // Начальное значение роста
   int _weight = 70;  // Начальное значение веса
   int _age = 25;     // Начальное значение возраста
+  double _activityLevel = 1.357;     // Начальное значение возраста
   bool _isFemale = true; // Состояние для пола (false = Male, true = Female)
 
   final maxHeight = 220;
@@ -179,6 +180,7 @@ class _OnboardingScreen1State extends State<OnboardingScreen1> {
                           height: _height,
                           weight: _weight,
                           age: _age,
+                          activityLevel: _activityLevel,
                           isFemale: _isFemale,
                         ));
                         context.go('/onboarding2');

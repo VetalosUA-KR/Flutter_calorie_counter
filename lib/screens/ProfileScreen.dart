@@ -37,6 +37,7 @@ class ProfileScreen extends StatelessWidget {
                       Text('Weight: ${profile.weight} kg'),
                       Text('Age: ${profile.age} years'),
                       Text('Gender: ${profile.isFemale ? 'Female' : 'Male'}'),
+                      Text('Activity level: ${profile.activityLevel}'),
                     ],
                   ),
                 ),

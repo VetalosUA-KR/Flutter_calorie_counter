@@ -30,6 +30,7 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
       height: event.height,
       weight: event.weight,
       age: event.age,
+      activityLevel: event.activityLevel,
       isFemale: event.isFemale,
     );
     await repository.saveProfile(updatedProfile);
@@ -50,17 +51,19 @@ class UpdateUserProfile extends OnboardingEvent {
   final int height;
   final int weight;
   final int age;
+  final double activityLevel;
   final bool isFemale;
 
   const UpdateUserProfile({
     required this.height,
     required this.weight,
     required this.age,
+    required this.activityLevel,
     required this.isFemale,
   });
 
   @override
-  List<Object?> get props => [height, weight, age, isFemale];
+  List<Object?> get props => [height, weight, age, activityLevel, isFemale];
 }
 
 abstract class OnboardingState extends Equatable {
