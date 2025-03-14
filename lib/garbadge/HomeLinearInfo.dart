@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import '../nutrition_profile.dart';
+import '../model/nutrition_profile.dart';
 import '../theme/app_colors.dart';
 
 class HomeScreen extends StatefulWidget {

@@ -1,5 +1,5 @@
 import 'package:hive/hive.dart';
-import '../nutrition_profile.dart';
+import 'nutrition_profile.dart';
 import 'meal.dart';
 import 'activity.dart';
 

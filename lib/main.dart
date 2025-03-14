@@ -6,15 +6,16 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'navigation/Route.dart';
 import 'theme/app_colors.dart';
 import 'theme/theme_bloc.dart';
-import 'package:flutterhelloworld/user_profile.dart';
+import 'package:flutterhelloworld/model/user_profile.dart';
 import 'repository/user_profile_repository.dart';
 import 'block/onboarding_bloc.dart';
-import 'package:flutterhelloworld/nutrition_profile.dart';
-import 'package:flutterhelloworld/meal.dart';
-import 'package:flutterhelloworld/activity.dart';
-import 'package:flutterhelloworld/daily_stats.dart';
+import 'package:flutterhelloworld/model/nutrition_profile.dart';
+import 'package:flutterhelloworld/model/meal.dart';
+import 'package:flutterhelloworld/model/activity.dart';
+import 'package:flutterhelloworld/model/daily_stats.dart';
 import 'screens/home/block/home_bloc.dart';
 import 'repository/stats_repository.dart';
+import 'repository/remote/remote_repository.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,7 +35,10 @@ void main() async {
     MultiBlocProvider(
       providers: [
         BlocProvider<HomeBloc>(
-          create: (context) => HomeBloc(statsRepository: StatsRepository()),
+          create: (context) => HomeBloc(
+              statsRepository: StatsRepository(),
+              remoteRepository: RemoteRepository(),
+          ),
         ),
         BlocProvider<ThemeBloc>(
           create: (context) => ThemeBloc(),

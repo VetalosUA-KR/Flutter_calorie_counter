@@ -1,4 +1,4 @@
-import 'package:flutterhelloworld/meal.dart';
+import 'package:flutterhelloworld/model/meal.dart';
 
 abstract class HomeEvent {}
 

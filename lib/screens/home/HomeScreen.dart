@@ -9,7 +9,7 @@ import 'widgets/action_button.dart';
 import 'widgets/circular_progress_painter.dart';
 import 'widgets/macro_card.dart';
 import 'widgets/add_meal_bottom_sheet.dart';
-import 'package:flutterhelloworld/meal.dart';
+import 'package:flutterhelloworld/model/meal.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -54,19 +54,85 @@ class _HomeScreenState extends State<HomeScreen>
   }
 
   void _showAddMealBottomSheet() {
+    final homeBloc = context.read<HomeBloc>(); // Получаем HomeBloc до открытия BottomSheet
     showModalBottomSheet(
       context: context,
       isScrollControlled: true, // Для корректного отображения с клавиатурой
       builder: (context) {
         return AddMealBottomSheet(
+          mealType: MealType.breakfast,
           onAddMeal: (Meal meal) {
             // Добавляем приём пищи через BLoC
-            context.read<HomeBloc>().add(AddMealEvent(meal));
+            //context.read<HomeBloc>().add(AddMealEvent(meal));
+            homeBloc.add(AddMealEvent(meal));
           },
         );
       },
     );
   }
+
+  /*void _showAddMealBottomSheet() {
+    final homeBloc = context.read<HomeBloc>(); // Получаем HomeBloc до открытия BottomSheet
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) {
+        return Padding(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+            left: 16.0,
+            right: 16.0,
+            top: 16.0,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'Select Meal Type',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 16),
+              DropdownButtonFormField<MealType>(
+                value: MealType.breakfast,
+                decoration: InputDecoration(
+                  labelText: 'Meal Type',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                items: MealType.values.map((MealType type) {
+                  return DropdownMenuItem<MealType>(
+                    value: type,
+                    child: Text(type.toString().split('.').last),
+                  );
+                }).toList(),
+                onChanged: (MealType? newValue) {
+                  if (newValue != null) {
+                    Navigator.pop(context);
+                    showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      builder: (context) => AddMealBottomSheet(
+                        onAddMeal: (Meal meal) {
+                          homeBloc.add(AddMealEvent(meal)); // Используем переданный HomeBloc
+                        },
+                        mealType: newValue,
+                      ),
+                    );
+                  }
+                },
+              ),
+              const SizedBox(height: 20),
+            ],
+          ),
+        );
+      },
+    );
+  }*/
 
   @override
   void dispose() {

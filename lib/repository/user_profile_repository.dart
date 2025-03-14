@@ -1,5 +1,5 @@
 import 'package:hive/hive.dart';
-import '../user_profile.dart';
+import '../model/user_profile.dart';
 
 class UserProfileRepository {
   final Box<UserProfile> _box;

@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import '../repository/user_profile_repository.dart';
-import 'package:flutterhelloworld/user_profile.dart';
-import 'package:flutterhelloworld/nutrition_profile.dart';
+import 'package:flutterhelloworld/model/user_profile.dart';
+import 'package:flutterhelloworld/model/nutrition_profile.dart';
 import 'package:hive/hive.dart';
 
 /*part 'onboarding_event.dart';

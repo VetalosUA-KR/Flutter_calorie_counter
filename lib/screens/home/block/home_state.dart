@@ -1,6 +1,6 @@
 // lib/screens/home/bloc/home_state.dart
 import 'package:equatable/equatable.dart';
-import '../../../nutrition_profile.dart';
+import '../../../model/nutrition_profile.dart';
 
 class HomeState extends Equatable {
   final NutritionProfile? nutritionProfile;

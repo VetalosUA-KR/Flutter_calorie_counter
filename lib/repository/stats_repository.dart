@@ -1,8 +1,8 @@
 import 'package:hive/hive.dart';
-import '../daily_stats.dart';
-import '../meal.dart';
-import '../activity.dart';
-import '../nutrition_profile.dart';
+import '../model/daily_stats.dart';
+import '../model/meal.dart';
+import '../model/activity.dart';
+import '../model/nutrition_profile.dart';
 
 class StatsRepository {
   static const String _boxName = 'dailyStatsBox';
