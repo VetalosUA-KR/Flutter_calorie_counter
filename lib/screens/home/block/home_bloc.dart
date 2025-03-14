@@ -1,24 +1,29 @@
-// lib/screens/home/bloc/home_bloc.dart
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 import '../../../nutrition_profile.dart';
 import 'home_event.dart';
 import 'home_state.dart';
+import 'package:flutterhelloworld/repository/stats_repository.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  HomeBloc() : super(const HomeState()) {
+  final StatsRepository statsRepository;
+
+  HomeBloc({required this.statsRepository}) : super(const HomeState()) {
     on<LoadNutritionProfileEvent>(_onLoadNutritionProfile);
+    on<AddMealEvent>(_onAddMeal);
   }
 
-  Future<void> _onLoadNutritionProfile(LoadNutritionProfileEvent event, Emitter<HomeState> emit) async {
+  Future<void> _onLoadNutritionProfile(
+      LoadNutritionProfileEvent event, Emitter<HomeState> emit) async {
     final box = Hive.box<NutritionProfile>('nutritionProfileBox');
     final nutrition = box.get('nutrition');
     if (nutrition != null) {
+      final stats = statsRepository.getStatsForDay(DateTime.now());
       final consumedValues = {
-        'calories': nutrition.calories * 0.5,
-        'protein': nutrition.protein * 0.5,
-        'fat': nutrition.fat * 0.5,
-        'carbs': nutrition.carbs * 0.5,
+        'calories': stats?.totalCalories ?? 0.0,
+        'protein': stats?.totalProtein ?? 0.0,
+        'fat': stats?.totalFat ?? 0.0,
+        'carbs': stats?.totalCarbs ?? 0.0,
       };
       emit(state.copyWith(
         nutritionProfile: nutrition,
@@ -29,6 +34,30 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         await Future.delayed(const Duration(milliseconds: 10));
         emit(state.copyWith(progressAnimationValue: i));
       }
+    }
+  }
+
+  Future<void> _onAddMeal(AddMealEvent event, Emitter<HomeState> emit) async {
+    // Добавляем приём пищи через StatsRepository
+    await statsRepository.addMeal(DateTime.now(), event.meal);
+
+    // Обновляем состояние
+    final stats = statsRepository.getStatsForDay(DateTime.now());
+    final consumedValues = {
+      'calories': stats?.totalCalories ?? 0.0,
+      'protein': stats?.totalProtein ?? 0.0,
+      'fat': stats?.totalFat ?? 0.0,
+      'carbs': stats?.totalCarbs ?? 0.0,
+    };
+    emit(state.copyWith(
+      consumedValues: consumedValues,
+      progressAnimationValue: 0.0, // Сбрасываем анимацию
+    ));
+
+    // Запускаем анимацию заново
+    for (double i = 0; i <= 1.0; i += 0.01) {
+      await Future.delayed(const Duration(milliseconds: 10));
+      emit(state.copyWith(progressAnimationValue: i));
     }
   }
 }

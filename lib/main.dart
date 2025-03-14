@@ -10,22 +10,31 @@ import 'package:flutterhelloworld/user_profile.dart';
 import 'repository/user_profile_repository.dart';
 import 'block/onboarding_bloc.dart';
 import 'package:flutterhelloworld/nutrition_profile.dart';
+import 'package:flutterhelloworld/meal.dart';
+import 'package:flutterhelloworld/activity.dart';
+import 'package:flutterhelloworld/daily_stats.dart';
 import 'screens/home/block/home_bloc.dart';
+import 'repository/stats_repository.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   Hive.registerAdapter(UserProfileAdapter());
   Hive.registerAdapter(NutritionProfileAdapter()); // Регистрация адаптера для NutritionProfile
+  Hive.registerAdapter(MealAdapter());
+  Hive.registerAdapter(ActivityAdapter());
+  Hive.registerAdapter(DailyStatsAdapter());
+  Hive.registerAdapter(MealTypeAdapter());
   final box = await Hive.openBox<UserProfile>('userProfileBox');
   final nutritionBox = await Hive.openBox<NutritionProfile>('nutritionProfileBox');
+  await Hive.openBox<DailyStats>('dailyStatsBox');
   final repository = UserProfileRepository(box);
 
   runApp(
     MultiBlocProvider(
       providers: [
         BlocProvider<HomeBloc>(
-          create: (context) => HomeBloc(),
+          create: (context) => HomeBloc(statsRepository: StatsRepository()),
         ),
         BlocProvider<ThemeBloc>(
           create: (context) => ThemeBloc(),

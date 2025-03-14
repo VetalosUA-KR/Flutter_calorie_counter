@@ -8,6 +8,8 @@ import 'package:flutterhelloworld/screens/home/block/home_state.dart';
 import 'widgets/action_button.dart';
 import 'widgets/circular_progress_painter.dart';
 import 'widgets/macro_card.dart';
+import 'widgets/add_meal_bottom_sheet.dart';
+import 'package:flutterhelloworld/meal.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -48,6 +50,21 @@ class _HomeScreenState extends State<HomeScreen>
       end: Offset.zero,
     ).animate(
       CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
+    );
+  }
+
+  void _showAddMealBottomSheet() {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true, // Для корректного отображения с клавиатурой
+      builder: (context) {
+        return AddMealBottomSheet(
+          onAddMeal: (Meal meal) {
+            // Добавляем приём пищи через BLoC
+            context.read<HomeBloc>().add(AddMealEvent(meal));
+          },
+        );
+      },
     );
   }
 
@@ -118,11 +135,7 @@ class _HomeScreenState extends State<HomeScreen>
                                         message: 'Add Food',
                                         child: ActionButton(
                                           icon: Icons.fastfood,
-                                          onTap: () {
-                                            print(
-                                              'Add Food pressed (placeholder)',
-                                            );
-                                          },
+                                          onTap: _showAddMealBottomSheet,
                                         ),
                                       ),
                                     ),
@@ -147,7 +160,7 @@ class _HomeScreenState extends State<HomeScreen>
                                               context,
                                             ).withOpacity(0.2),
                                             progressColor: Colors.orange,
-                                            strokeWidth: 20, // Толщина кольца
+                                            strokeWidth: 10, // Толщина кольца
                                           ),
                                           child: SizedBox(
                                             width: progressBarSize,
