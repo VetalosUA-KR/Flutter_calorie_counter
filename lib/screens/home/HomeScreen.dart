@@ -1,4 +1,3 @@
-// lib/screens/home/home_screen.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../theme/app_colors.dart';
@@ -63,76 +62,12 @@ class _HomeScreenState extends State<HomeScreen>
           mealType: MealType.breakfast,
           onAddMeal: (Meal meal) {
             // Добавляем приём пищи через BLoC
-            //context.read<HomeBloc>().add(AddMealEvent(meal));
             homeBloc.add(AddMealEvent(meal));
           },
         );
       },
     );
   }
-
-  /*void _showAddMealBottomSheet() {
-    final homeBloc = context.read<HomeBloc>(); // Получаем HomeBloc до открытия BottomSheet
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      builder: (context) {
-        return Padding(
-          padding: EdgeInsets.only(
-            bottom: MediaQuery.of(context).viewInsets.bottom,
-            left: 16.0,
-            right: 16.0,
-            top: 16.0,
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'Select Meal Type',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 16),
-              DropdownButtonFormField<MealType>(
-                value: MealType.breakfast,
-                decoration: InputDecoration(
-                  labelText: 'Meal Type',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-                items: MealType.values.map((MealType type) {
-                  return DropdownMenuItem<MealType>(
-                    value: type,
-                    child: Text(type.toString().split('.').last),
-                  );
-                }).toList(),
-                onChanged: (MealType? newValue) {
-                  if (newValue != null) {
-                    Navigator.pop(context);
-                    showModalBottomSheet(
-                      context: context,
-                      isScrollControlled: true,
-                      builder: (context) => AddMealBottomSheet(
-                        onAddMeal: (Meal meal) {
-                          homeBloc.add(AddMealEvent(meal)); // Используем переданный HomeBloc
-                        },
-                        mealType: newValue,
-                      ),
-                    );
-                  }
-                },
-              ),
-              const SizedBox(height: 20),
-            ],
-          ),
-        );
-      },
-    );
-  }*/
 
   @override
   void dispose() {
@@ -143,8 +78,7 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   Widget build(BuildContext context) {
     // Динамический размер прогресс-бара в зависимости от ширины экрана
-    final progressBarSize =
-        MediaQuery.of(context).size.width * 0.5; // 50% от ширины экрана
+    final progressBarSize = MediaQuery.of(context).size.width * 0.4; // 50% от ширины экрана
 
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
@@ -185,25 +119,11 @@ class _HomeScreenState extends State<HomeScreen>
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   // Кнопка "Add Food" слева
-                                  ScaleTransition(
-                                    scale: Tween<double>(
-                                      begin: 0.5,
-                                      end: 1.0,
-                                    ).animate(
-                                      CurvedAnimation(
-                                        parent: _animationController,
-                                        curve: Curves.elasticOut,
-                                      ),
-                                    ),
-                                    child: FadeTransition(
-                                      opacity: _fadeAnimation,
-                                      child: Tooltip(
-                                        message: 'Add Food',
-                                        child: ActionButton(
-                                          icon: Icons.fastfood,
-                                          onTap: _showAddMealBottomSheet,
-                                        ),
-                                      ),
+                                  Tooltip(
+                                    message: 'Add Food',
+                                    child: ActionButton(
+                                      icon: Icons.fastfood,
+                                      onTap: _showAddMealBottomSheet,
                                     ),
                                   ),
                                   // Кастомный круглый прогресс-бар для калорий
@@ -216,15 +136,8 @@ class _HomeScreenState extends State<HomeScreen>
                                         // Кастомный прогресс-бар
                                         CustomPaint(
                                           painter: CircularProgressPainter(
-                                            progress:
-                                                (state.consumedValues['calories']! /
-                                                    state
-                                                        .nutritionProfile!
-                                                        .calories) *
-                                                state.progressAnimationValue,
-                                            backgroundColor: AppColors.getHint(
-                                              context,
-                                            ).withOpacity(0.2),
+                                            progress: (state.consumedValues['calories']! / state.nutritionProfile!.calories) * state.progressAnimationValue,
+                                            backgroundColor: AppColors.getHint(context,).withOpacity(0.2),
                                             progressColor: Colors.orange,
                                             strokeWidth: 10, // Толщина кольца
                                           ),
@@ -242,7 +155,7 @@ class _HomeScreenState extends State<HomeScreen>
                                               'Calories',
                                               style: TextStyle(
                                                 fontSize:
-                                                    progressBarSize * 0.07,
+                                                    progressBarSize * 0.1,
                                                 // Адаптивный размер шрифта
                                                 fontWeight: FontWeight.bold,
                                                 color: AppColors.getText(
@@ -252,15 +165,11 @@ class _HomeScreenState extends State<HomeScreen>
                                             ),
                                             const SizedBox(height: 1),
                                             // Отступ между заголовком и значениями
-                                            Text(
-                                              '${state.consumedValues['calories']!.toStringAsFixed(0)} / ${state.nutritionProfile!.calories.toStringAsFixed(0)} kcal',
+                                            Text('${state.consumedValues['calories']!.toStringAsFixed(0)} / ${state.nutritionProfile!.calories.toStringAsFixed(0)} kcal',
                                               style: TextStyle(
-                                                fontSize:
-                                                    progressBarSize * 0.06,
+                                                fontSize: progressBarSize * 0.07,
                                                 // Адаптивный размер шрифта
-                                                color: AppColors.getText(
-                                                  context,
-                                                ).withOpacity(0.7),
+                                                color: AppColors.getText(context,).withOpacity(0.7),
                                               ),
                                               textAlign: TextAlign.center,
                                             ),
@@ -270,29 +179,13 @@ class _HomeScreenState extends State<HomeScreen>
                                     ),
                                   ),
                                   // Кнопка "Add Activity" справа
-                                  ScaleTransition(
-                                    scale: Tween<double>(
-                                      begin: 0.5,
-                                      end: 1.0,
-                                    ).animate(
-                                      CurvedAnimation(
-                                        parent: _animationController,
-                                        curve: Curves.elasticOut,
-                                      ),
-                                    ),
-                                    child: FadeTransition(
-                                      opacity: _fadeAnimation,
-                                      child: Tooltip(
-                                        message: 'Add Activity',
-                                        child: ActionButton(
-                                          icon: Icons.directions_run,
-                                          onTap: () {
-                                            print(
-                                              'Add Activity pressed (placeholder)',
-                                            );
-                                          },
-                                        ),
-                                      ),
+                                  Tooltip(
+                                    message: 'Add Activity',
+                                    child: ActionButton(
+                                      icon: Icons.directions_run,
+                                      onTap: () {
+                                        print('Add Activity pressed (placeholder)',);
+                                      },
                                     ),
                                   ),
                                 ],
@@ -315,29 +208,20 @@ class _HomeScreenState extends State<HomeScreen>
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   SizedBox(
-                                    width:
-                                        (MediaQuery.of(context).size.width -
-                                            48) /
-                                        3,
+                                    width: (MediaQuery.of(context).size.width - 48) / 3,
                                     // Фиксированная ширина карточки
                                     child: MacroCard(
                                       title: 'Protein',
                                       goal: state.nutritionProfile!.protein,
-                                      consumed:
-                                          state.consumedValues['protein']!,
+                                      consumed: state.consumedValues['protein']!,
                                       unit: 'g',
                                       color: Colors.blue,
-                                      animatedProgress:
-                                          (state.consumedValues['protein']! /
-                                              state.nutritionProfile!.protein) *
-                                          state.progressAnimationValue,
+                                      animatedProgress: (state.consumedValues['protein']! / state.nutritionProfile!.protein) * state.progressAnimationValue,
                                     ),
                                   ),
                                   SizedBox(
                                     width:
-                                        (MediaQuery.of(context).size.width -
-                                            48) /
-                                        3,
+                                        (MediaQuery.of(context).size.width - 48) / 3,
                                     // Фиксированная ширина карточки
                                     child: MacroCard(
                                       title: 'Fat',
@@ -345,17 +229,12 @@ class _HomeScreenState extends State<HomeScreen>
                                       consumed: state.consumedValues['fat']!,
                                       unit: 'g',
                                       color: Colors.red,
-                                      animatedProgress:
-                                          (state.consumedValues['fat']! /
-                                              state.nutritionProfile!.fat) *
-                                          state.progressAnimationValue,
+                                      animatedProgress: (state.consumedValues['fat']! / state.nutritionProfile!.fat) * state.progressAnimationValue,
                                     ),
                                   ),
                                   SizedBox(
                                     width:
-                                        (MediaQuery.of(context).size.width -
-                                            48) /
-                                        3,
+                                        (MediaQuery.of(context).size.width - 48) / 3,
                                     // Фиксированная ширина карточки
                                     child: MacroCard(
                                       title: 'Carbs',
@@ -363,10 +242,7 @@ class _HomeScreenState extends State<HomeScreen>
                                       consumed: state.consumedValues['carbs']!,
                                       unit: 'g',
                                       color: Colors.green,
-                                      animatedProgress:
-                                          (state.consumedValues['carbs']! /
-                                              state.nutritionProfile!.carbs) *
-                                          state.progressAnimationValue,
+                                      animatedProgress: (state.consumedValues['carbs']! / state.nutritionProfile!.carbs) * state.progressAnimationValue,
                                     ),
                                   ),
                                 ],

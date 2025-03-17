@@ -261,3 +261,67 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     );
   }
 }
+
+//Боттом щет добавления приема пищи с выбором типа
+/*void _showAddMealBottomSheet() {
+    final homeBloc = context.read<HomeBloc>(); // Получаем HomeBloc до открытия BottomSheet
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) {
+        return Padding(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+            left: 16.0,
+            right: 16.0,
+            top: 16.0,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'Select Meal Type',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 16),
+              DropdownButtonFormField<MealType>(
+                value: MealType.breakfast,
+                decoration: InputDecoration(
+                  labelText: 'Meal Type',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                items: MealType.values.map((MealType type) {
+                  return DropdownMenuItem<MealType>(
+                    value: type,
+                    child: Text(type.toString().split('.').last),
+                  );
+                }).toList(),
+                onChanged: (MealType? newValue) {
+                  if (newValue != null) {
+                    Navigator.pop(context);
+                    showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      builder: (context) => AddMealBottomSheet(
+                        onAddMeal: (Meal meal) {
+                          homeBloc.add(AddMealEvent(meal)); // Используем переданный HomeBloc
+                        },
+                        mealType: newValue,
+                      ),
+                    );
+                  }
+                },
+              ),
+              const SizedBox(height: 20),
+            ],
+          ),
+        );
+      },
+    );
+  }*/

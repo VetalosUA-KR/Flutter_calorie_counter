@@ -10,6 +10,7 @@ class AppColors {
   static const Color lightSnackBar = Color(0xFF333333); // SnackBar
   static const Color lightHint = Color(0xFF757575); // Подсказки
   static const Color lightCardBackground = Color(0x80ADDBE3); // фон карточки
+  static const Color lightIcon = Color(0xFF37A8B7); // цвет иконок
 
   // Цвета для тёмной темы
   static const Color darkPrimary = Color(0xFF2B5E28); // Основной цвет
@@ -20,10 +21,15 @@ class AppColors {
   static const Color darkSnackBar = Color(0xFF424242); // SnackBar
   static const Color darkHint = Color(0xFFB0BEC5); // Подсказки
   static const Color darkCardBackground = Color(0x80567054); // фон карточки
+  static const Color darkIcon = Color(0xFF15860F); // цвет иконок
 
   // Метод для получения цветов в зависимости от темы
   static Color getCardBackground(BuildContext context) =>
       Theme.of(context).brightness == Brightness.light ? lightCardBackground : darkCardBackground;
+
+  static Color getIcon(BuildContext context) =>
+      Theme.of(context).brightness == Brightness.light ? lightIcon : darkIcon;
+
   static Color getPrimary(BuildContext context) =>
       Theme.of(context).brightness == Brightness.light ? lightPrimary : darkPrimary;
 

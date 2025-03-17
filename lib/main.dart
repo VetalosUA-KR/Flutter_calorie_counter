@@ -15,37 +15,42 @@ import 'package:flutterhelloworld/model/activity.dart';
 import 'package:flutterhelloworld/model/daily_stats.dart';
 import 'screens/home/block/home_bloc.dart';
 import 'repository/stats_repository.dart';
+import 'screens/home/block/home_event.dart';
 import 'repository/remote/remote_repository.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   Hive.registerAdapter(UserProfileAdapter());
-  Hive.registerAdapter(NutritionProfileAdapter()); // Регистрация адаптера для NutritionProfile
+  Hive.registerAdapter(NutritionProfileAdapter());
   Hive.registerAdapter(MealAdapter());
   Hive.registerAdapter(ActivityAdapter());
   Hive.registerAdapter(DailyStatsAdapter());
   Hive.registerAdapter(MealTypeAdapter());
-  final box = await Hive.openBox<UserProfile>('userProfileBox');
+
+  final profileBox = await Hive.openBox<UserProfile>('userProfileBox');
   final nutritionBox = await Hive.openBox<NutritionProfile>('nutritionProfileBox');
-  await Hive.openBox<DailyStats>('dailyStatsBox');
-  final repository = UserProfileRepository(box);
+  final statsBox = await Hive.openBox<DailyStats>('dailyStatsBox');
+
+  final statsRepository = StatsRepository();
 
   runApp(
     MultiBlocProvider(
       providers: [
         BlocProvider<HomeBloc>(
           create: (context) => HomeBloc(
-              statsRepository: StatsRepository(),
-              remoteRepository: RemoteRepository(),
-          ),
+            statsRepository: statsRepository,
+            remoteRepository: RemoteRepository(),
+          )..add(LoadNutritionProfileEvent()),
         ),
         BlocProvider<ThemeBloc>(
           create: (context) => ThemeBloc(),
         ),
         BlocProvider<OnboardingBloc>(
-          create: (context) => OnboardingBloc(repository: repository)..add(LoadUserProfile()),
+          create: (context) => OnboardingBloc(repository: UserProfileRepository(profileBox))
+            ..add(LoadUserProfile()),
         ),
+
       ],
       child: const MyApp(),
     ),

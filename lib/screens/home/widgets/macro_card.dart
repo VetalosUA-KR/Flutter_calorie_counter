@@ -39,15 +39,8 @@ class MacroCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(8.0), // Внутренние отступы карточки
       decoration: BoxDecoration(
-        color: AppColors.getCardBackground(context).withOpacity(0.9),
+        color: AppColors.getCardBackground(context),
         borderRadius: BorderRadius.circular(12), // Закругление углов карточки
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 8,
-            offset: const Offset(0, 4),
-          ),
-        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
