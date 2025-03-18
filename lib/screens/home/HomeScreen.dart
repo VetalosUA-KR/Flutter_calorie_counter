@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutterhelloworld/model/activity.dart';
+import 'package:flutterhelloworld/screens/home/widgets/activity/add_activity_bottom_sheet.dart';
 import '../../theme/app_colors.dart';
 import 'package:flutterhelloworld/screens/home/block/home_bloc.dart';
 import 'package:flutterhelloworld/screens/home/block/home_event.dart';
@@ -9,6 +11,8 @@ import 'widgets/circular_progress_painter.dart';
 import 'widgets/macro_card.dart';
 import 'widgets/add_meal_bottom_sheet.dart';
 import 'package:flutterhelloworld/model/meal.dart';
+import '../profile/block/profile_event.dart';
+import '../profile/block/profile_block.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -54,6 +58,8 @@ class _HomeScreenState extends State<HomeScreen>
 
   void _showAddMealBottomSheet() {
     final homeBloc = context.read<HomeBloc>(); // Получаем HomeBloc до открытия BottomSheet
+    final profileBloc = context.read<ProfileBlock>(); // Получаем ProfileBlock
+
     showModalBottomSheet(
       context: context,
       isScrollControlled: true, // Для корректного отображения с клавиатурой
@@ -61,8 +67,32 @@ class _HomeScreenState extends State<HomeScreen>
         return AddMealBottomSheet(
           mealType: MealType.breakfast,
           onAddMeal: (Meal meal) {
-            // Добавляем приём пищи через BLoC
-            homeBloc.add(AddMealEvent(meal));
+            // Добавляем приём пищи через BLoC и передаем лямбду
+            homeBloc.add(AddMealEvent(meal, onMealAdded: () {
+              // Обновляем статистику в ProfileBlock
+              profileBloc.add(UpdateDailyStatsEvent());
+            }));
+          },
+        );
+      },
+    );
+  }
+
+  void _showAddActivityBottomSheet() {
+    final homeBloc = context.read<HomeBloc>(); // Получаем HomeBloc
+    final profileBloc = context.read<ProfileBlock>(); // Получаем ProfileBlock
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) {
+        return AddSportActivityBottomSheet(
+          onAddActivity: (Activity activity) {
+            // Добавляем активность через BLoC
+            homeBloc.add(AddActivityEvent(activity, onActivityAdded: () {
+              // Обновляем статистику в ProfileBlock
+              profileBloc.add(UpdateDailyStatsEvent());
+            }));
           },
         );
       },
@@ -183,9 +213,7 @@ class _HomeScreenState extends State<HomeScreen>
                                     message: 'Add Activity',
                                     child: ActionButton(
                                       icon: Icons.directions_run,
-                                      onTap: () {
-                                        print('Add Activity pressed (placeholder)',);
-                                      },
+                                      onTap: _showAddActivityBottomSheet,
                                     ),
                                   ),
                                 ],

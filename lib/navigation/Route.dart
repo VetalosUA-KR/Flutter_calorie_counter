@@ -1,6 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:flutterhelloworld/screens/home/HomeScreen.dart';
-import 'package:flutterhelloworld/screens/ProfileScreen.dart';
+import 'package:flutterhelloworld/screens/profile/ProfileScreen.dart';
 import 'package:flutterhelloworld/screens/SettingsScreen.dart';
 import 'package:flutterhelloworld/screens/SplashScreen.dart';
 import 'package:flutterhelloworld/screens/onboarding/OnboardingScreen1.dart';

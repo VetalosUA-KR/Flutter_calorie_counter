@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutterhelloworld/screens/profile/block/profile_block.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -17,6 +18,7 @@ import 'screens/home/block/home_bloc.dart';
 import 'repository/stats_repository.dart';
 import 'screens/home/block/home_event.dart';
 import 'repository/remote/remote_repository.dart';
+import 'screens/profile/block/profile_event.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -49,6 +51,9 @@ void main() async {
         BlocProvider<OnboardingBloc>(
           create: (context) => OnboardingBloc(repository: UserProfileRepository(profileBox))
             ..add(LoadUserProfile()),
+        ),
+        BlocProvider<ProfileBlock>(
+          create: (context) => ProfileBlock(statsRepository: statsRepository)..add(LoadDailyStatsEvent())
         ),
 
       ],

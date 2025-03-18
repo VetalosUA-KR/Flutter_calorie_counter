@@ -12,6 +12,11 @@ class StatsRepository {
     _box = Hive.box<DailyStats>(_boxName);
   }
 
+  // Получение всей статистики
+  List<DailyStats> getAllStats() {
+    return _box.values.toList();
+  }
+
   // Получение статистики за конкретный день
   DailyStats? getStatsForDay(DateTime date) {
     return _box.values.firstWhere(
@@ -73,6 +78,7 @@ class StatsRepository {
     mealsForType.add(meal);
     stats.mealsByType[meal.type] = mealsForType;
     await updateStats(stats);
+
   }
 
   // Удаление приёма пищи за день

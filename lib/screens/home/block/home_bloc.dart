@@ -16,6 +16,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }) : super(const HomeState()) {
     on<LoadNutritionProfileEvent>(_onLoadNutritionProfile);
     on<AddMealEvent>(_onAddMeal);
+    on<AddActivityEvent>(_onAddActivity);
   }
 
   Future<void> _onLoadNutritionProfile(
@@ -35,12 +36,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         consumedValues: consumedValues,
       ));
 
-      // Пример загрузки данных с API (опционально)
+      /*// Пример загрузки данных с API (опционально)
       final product = await remoteRepository.fetchProductByBarcode('737628064502');
       if (product != null && product.product?.nutriments != null) {
         print('Fetched product: ${product.product?.productName}');
         print('Nutriments: ${product.product?.nutriments}');
-      }
+      }*/
 
       // Анимация прогресс-бара
       for (double i = 0; i <= 1.0; i += 0.01) {
@@ -72,5 +73,36 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       await Future.delayed(const Duration(milliseconds: 10));
       emit(state.copyWith(progressAnimationValue: i));
     }
+
+    // Вызываем лямбду, если она передана
+    event.onMealAdded?.call();
   }
+
+  Future<void> _onAddActivity(AddActivityEvent event, Emitter<HomeState> emit) async {
+    // Добавляем активность через StatsRepository
+    await statsRepository.addActivity(DateTime.now(), event.activity);
+
+    // Обновляем состояние
+    final stats = statsRepository.getStatsForDay(DateTime.now());
+    final consumedValues = {
+      'calories': stats?.totalCalories ?? 0.0,
+      'protein': stats?.totalProtein ?? 0.0,
+      'fat': stats?.totalFat ?? 0.0,
+      'carbs': stats?.totalCarbs ?? 0.0,
+    };
+    emit(state.copyWith(
+      consumedValues: consumedValues,
+      progressAnimationValue: 0.0, // Сбрасываем анимацию
+    ));
+
+    // Запускаем анимацию заново
+    for (double i = 0; i <= 1.0; i += 0.01) {
+      await Future.delayed(const Duration(milliseconds: 10));
+      emit(state.copyWith(progressAnimationValue: i));
+    }
+
+    // Вызываем лямбду, если она передана
+    event.onActivityAdded?.call();
+  }
+
 }

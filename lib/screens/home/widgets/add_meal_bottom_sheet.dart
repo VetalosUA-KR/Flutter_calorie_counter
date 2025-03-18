@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutterhelloworld/model/meal.dart';
-import 'package:flutterhelloworld/screens/home/widgets/manual_entry_bottom_sheet.dart';
-import 'package:flutterhelloworld/screens/home/widgets/scan_barcode_bottom_sheet.dart';
-import 'package:flutterhelloworld/screens/home/widgets/search_database_bottom_sheet.dart';
+import 'package:flutterhelloworld/screens/home/widgets/meal/manual_entry_bottom_sheet.dart';
+import 'package:flutterhelloworld/screens/home/widgets/meal/scan_barcode_bottom_sheet.dart';
+import 'package:flutterhelloworld/screens/home/widgets/meal/search_database_bottom_sheet.dart';
 class AddMealBottomSheet extends StatelessWidget {
   final Function(Meal) onAddMeal;
   final MealType mealType;
