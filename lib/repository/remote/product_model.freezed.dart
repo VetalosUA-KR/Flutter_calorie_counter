@@ -22,6 +22,10 @@ ProductResponse _$ProductResponseFromJson(Map<String, dynamic> json) {
 mixin _$ProductResponse {
   @JsonKey(name: 'product')
   Product? get product => throw _privateConstructorUsedError;
+  @JsonKey(name: 'status')
+  int? get status => throw _privateConstructorUsedError;
+  @JsonKey(name: 'status_verbose')
+  String? get statusVerbose => throw _privateConstructorUsedError;
 
   /// Serializes this ProductResponse to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -39,7 +43,10 @@ abstract class $ProductResponseCopyWith<$Res> {
           ProductResponse value, $Res Function(ProductResponse) then) =
       _$ProductResponseCopyWithImpl<$Res, ProductResponse>;
   @useResult
-  $Res call({@JsonKey(name: 'product') Product? product});
+  $Res call(
+      {@JsonKey(name: 'product') Product? product,
+      @JsonKey(name: 'status') int? status,
+      @JsonKey(name: 'status_verbose') String? statusVerbose});
 
   $ProductCopyWith<$Res>? get product;
 }
@@ -60,12 +67,22 @@ class _$ProductResponseCopyWithImpl<$Res, $Val extends ProductResponse>
   @override
   $Res call({
     Object? product = freezed,
+    Object? status = freezed,
+    Object? statusVerbose = freezed,
   }) {
     return _then(_value.copyWith(
       product: freezed == product
           ? _value.product
           : product // ignore: cast_nullable_to_non_nullable
               as Product?,
+      status: freezed == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as int?,
+      statusVerbose: freezed == statusVerbose
+          ? _value.statusVerbose
+          : statusVerbose // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 
@@ -92,7 +109,10 @@ abstract class _$$ProductResponseImplCopyWith<$Res>
       __$$ProductResponseImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({@JsonKey(name: 'product') Product? product});
+  $Res call(
+      {@JsonKey(name: 'product') Product? product,
+      @JsonKey(name: 'status') int? status,
+      @JsonKey(name: 'status_verbose') String? statusVerbose});
 
   @override
   $ProductCopyWith<$Res>? get product;
@@ -112,12 +132,22 @@ class __$$ProductResponseImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? product = freezed,
+    Object? status = freezed,
+    Object? statusVerbose = freezed,
   }) {
     return _then(_$ProductResponseImpl(
       product: freezed == product
           ? _value.product
           : product // ignore: cast_nullable_to_non_nullable
               as Product?,
+      status: freezed == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as int?,
+      statusVerbose: freezed == statusVerbose
+          ? _value.statusVerbose
+          : statusVerbose // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -125,7 +155,10 @@ class __$$ProductResponseImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$ProductResponseImpl implements _ProductResponse {
-  const _$ProductResponseImpl({@JsonKey(name: 'product') this.product});
+  const _$ProductResponseImpl(
+      {@JsonKey(name: 'product') this.product,
+      @JsonKey(name: 'status') this.status,
+      @JsonKey(name: 'status_verbose') this.statusVerbose});
 
   factory _$ProductResponseImpl.fromJson(Map<String, dynamic> json) =>
       _$$ProductResponseImplFromJson(json);
@@ -133,10 +166,16 @@ class _$ProductResponseImpl implements _ProductResponse {
   @override
   @JsonKey(name: 'product')
   final Product? product;
+  @override
+  @JsonKey(name: 'status')
+  final int? status;
+  @override
+  @JsonKey(name: 'status_verbose')
+  final String? statusVerbose;
 
   @override
   String toString() {
-    return 'ProductResponse(product: $product)';
+    return 'ProductResponse(product: $product, status: $status, statusVerbose: $statusVerbose)';
   }
 
   @override
@@ -144,12 +183,15 @@ class _$ProductResponseImpl implements _ProductResponse {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ProductResponseImpl &&
-            (identical(other.product, product) || other.product == product));
+            (identical(other.product, product) || other.product == product) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.statusVerbose, statusVerbose) ||
+                other.statusVerbose == statusVerbose));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, product);
+  int get hashCode => Object.hash(runtimeType, product, status, statusVerbose);
 
   /// Create a copy of ProductResponse
   /// with the given fields replaced by the non-null parameter values.
@@ -170,7 +212,9 @@ class _$ProductResponseImpl implements _ProductResponse {
 
 abstract class _ProductResponse implements ProductResponse {
   const factory _ProductResponse(
-          {@JsonKey(name: 'product') final Product? product}) =
+          {@JsonKey(name: 'product') final Product? product,
+          @JsonKey(name: 'status') final int? status,
+          @JsonKey(name: 'status_verbose') final String? statusVerbose}) =
       _$ProductResponseImpl;
 
   factory _ProductResponse.fromJson(Map<String, dynamic> json) =
@@ -179,6 +223,12 @@ abstract class _ProductResponse implements ProductResponse {
   @override
   @JsonKey(name: 'product')
   Product? get product;
+  @override
+  @JsonKey(name: 'status')
+  int? get status;
+  @override
+  @JsonKey(name: 'status_verbose')
+  String? get statusVerbose;
 
   /// Create a copy of ProductResponse
   /// with the given fields replaced by the non-null parameter values.
@@ -202,6 +252,10 @@ mixin _$Product {
   String? get ingredientsText => throw _privateConstructorUsedError;
   @JsonKey(name: 'nutriments')
   Nutriments? get nutriments => throw _privateConstructorUsedError;
+  @JsonKey(name: 'nutrition_grades')
+  String? get nutritionGrades => throw _privateConstructorUsedError;
+  @JsonKey(name: 'image_url')
+  String? get imageUrl => throw _privateConstructorUsedError;
 
   /// Serializes this Product to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -221,7 +275,9 @@ abstract class $ProductCopyWith<$Res> {
       {@JsonKey(name: 'product_name') String? productName,
       @JsonKey(name: 'brands') String? brands,
       @JsonKey(name: 'ingredients_text') String? ingredientsText,
-      @JsonKey(name: 'nutriments') Nutriments? nutriments});
+      @JsonKey(name: 'nutriments') Nutriments? nutriments,
+      @JsonKey(name: 'nutrition_grades') String? nutritionGrades,
+      @JsonKey(name: 'image_url') String? imageUrl});
 
   $NutrimentsCopyWith<$Res>? get nutriments;
 }
@@ -245,6 +301,8 @@ class _$ProductCopyWithImpl<$Res, $Val extends Product>
     Object? brands = freezed,
     Object? ingredientsText = freezed,
     Object? nutriments = freezed,
+    Object? nutritionGrades = freezed,
+    Object? imageUrl = freezed,
   }) {
     return _then(_value.copyWith(
       productName: freezed == productName
@@ -263,6 +321,14 @@ class _$ProductCopyWithImpl<$Res, $Val extends Product>
           ? _value.nutriments
           : nutriments // ignore: cast_nullable_to_non_nullable
               as Nutriments?,
+      nutritionGrades: freezed == nutritionGrades
+          ? _value.nutritionGrades
+          : nutritionGrades // ignore: cast_nullable_to_non_nullable
+              as String?,
+      imageUrl: freezed == imageUrl
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 
@@ -292,7 +358,9 @@ abstract class _$$ProductImplCopyWith<$Res> implements $ProductCopyWith<$Res> {
       {@JsonKey(name: 'product_name') String? productName,
       @JsonKey(name: 'brands') String? brands,
       @JsonKey(name: 'ingredients_text') String? ingredientsText,
-      @JsonKey(name: 'nutriments') Nutriments? nutriments});
+      @JsonKey(name: 'nutriments') Nutriments? nutriments,
+      @JsonKey(name: 'nutrition_grades') String? nutritionGrades,
+      @JsonKey(name: 'image_url') String? imageUrl});
 
   @override
   $NutrimentsCopyWith<$Res>? get nutriments;
@@ -315,6 +383,8 @@ class __$$ProductImplCopyWithImpl<$Res>
     Object? brands = freezed,
     Object? ingredientsText = freezed,
     Object? nutriments = freezed,
+    Object? nutritionGrades = freezed,
+    Object? imageUrl = freezed,
   }) {
     return _then(_$ProductImpl(
       productName: freezed == productName
@@ -333,6 +403,14 @@ class __$$ProductImplCopyWithImpl<$Res>
           ? _value.nutriments
           : nutriments // ignore: cast_nullable_to_non_nullable
               as Nutriments?,
+      nutritionGrades: freezed == nutritionGrades
+          ? _value.nutritionGrades
+          : nutritionGrades // ignore: cast_nullable_to_non_nullable
+              as String?,
+      imageUrl: freezed == imageUrl
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -344,7 +422,9 @@ class _$ProductImpl implements _Product {
       {@JsonKey(name: 'product_name') this.productName,
       @JsonKey(name: 'brands') this.brands,
       @JsonKey(name: 'ingredients_text') this.ingredientsText,
-      @JsonKey(name: 'nutriments') this.nutriments});
+      @JsonKey(name: 'nutriments') this.nutriments,
+      @JsonKey(name: 'nutrition_grades') this.nutritionGrades,
+      @JsonKey(name: 'image_url') this.imageUrl});
 
   factory _$ProductImpl.fromJson(Map<String, dynamic> json) =>
       _$$ProductImplFromJson(json);
@@ -361,10 +441,16 @@ class _$ProductImpl implements _Product {
   @override
   @JsonKey(name: 'nutriments')
   final Nutriments? nutriments;
+  @override
+  @JsonKey(name: 'nutrition_grades')
+  final String? nutritionGrades;
+  @override
+  @JsonKey(name: 'image_url')
+  final String? imageUrl;
 
   @override
   String toString() {
-    return 'Product(productName: $productName, brands: $brands, ingredientsText: $ingredientsText, nutriments: $nutriments)';
+    return 'Product(productName: $productName, brands: $brands, ingredientsText: $ingredientsText, nutriments: $nutriments, nutritionGrades: $nutritionGrades, imageUrl: $imageUrl)';
   }
 
   @override
@@ -378,13 +464,17 @@ class _$ProductImpl implements _Product {
             (identical(other.ingredientsText, ingredientsText) ||
                 other.ingredientsText == ingredientsText) &&
             (identical(other.nutriments, nutriments) ||
-                other.nutriments == nutriments));
+                other.nutriments == nutriments) &&
+            (identical(other.nutritionGrades, nutritionGrades) ||
+                other.nutritionGrades == nutritionGrades) &&
+            (identical(other.imageUrl, imageUrl) ||
+                other.imageUrl == imageUrl));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, productName, brands, ingredientsText, nutriments);
+  int get hashCode => Object.hash(runtimeType, productName, brands,
+      ingredientsText, nutriments, nutritionGrades, imageUrl);
 
   /// Create a copy of Product
   /// with the given fields replaced by the non-null parameter values.
@@ -404,11 +494,12 @@ class _$ProductImpl implements _Product {
 
 abstract class _Product implements Product {
   const factory _Product(
-          {@JsonKey(name: 'product_name') final String? productName,
-          @JsonKey(name: 'brands') final String? brands,
-          @JsonKey(name: 'ingredients_text') final String? ingredientsText,
-          @JsonKey(name: 'nutriments') final Nutriments? nutriments}) =
-      _$ProductImpl;
+      {@JsonKey(name: 'product_name') final String? productName,
+      @JsonKey(name: 'brands') final String? brands,
+      @JsonKey(name: 'ingredients_text') final String? ingredientsText,
+      @JsonKey(name: 'nutriments') final Nutriments? nutriments,
+      @JsonKey(name: 'nutrition_grades') final String? nutritionGrades,
+      @JsonKey(name: 'image_url') final String? imageUrl}) = _$ProductImpl;
 
   factory _Product.fromJson(Map<String, dynamic> json) = _$ProductImpl.fromJson;
 
@@ -424,6 +515,12 @@ abstract class _Product implements Product {
   @override
   @JsonKey(name: 'nutriments')
   Nutriments? get nutriments;
+  @override
+  @JsonKey(name: 'nutrition_grades')
+  String? get nutritionGrades;
+  @override
+  @JsonKey(name: 'image_url')
+  String? get imageUrl;
 
   /// Create a copy of Product
   /// with the given fields replaced by the non-null parameter values.
@@ -439,13 +536,13 @@ Nutriments _$NutrimentsFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Nutriments {
-  @JsonKey(name: 'energy-kcal')
+  @JsonKey(name: 'energy-kcal_100g')
   double? get energyKcal => throw _privateConstructorUsedError;
-  @JsonKey(name: 'proteins')
+  @JsonKey(name: 'proteins_100g')
   double? get proteins => throw _privateConstructorUsedError;
-  @JsonKey(name: 'fat')
+  @JsonKey(name: 'fat_100g')
   double? get fat => throw _privateConstructorUsedError;
-  @JsonKey(name: 'carbohydrates')
+  @JsonKey(name: 'carbohydrates_100g')
   double? get carbohydrates => throw _privateConstructorUsedError;
 
   /// Serializes this Nutriments to a JSON map.
@@ -465,10 +562,10 @@ abstract class $NutrimentsCopyWith<$Res> {
       _$NutrimentsCopyWithImpl<$Res, Nutriments>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'energy-kcal') double? energyKcal,
-      @JsonKey(name: 'proteins') double? proteins,
-      @JsonKey(name: 'fat') double? fat,
-      @JsonKey(name: 'carbohydrates') double? carbohydrates});
+      {@JsonKey(name: 'energy-kcal_100g') double? energyKcal,
+      @JsonKey(name: 'proteins_100g') double? proteins,
+      @JsonKey(name: 'fat_100g') double? fat,
+      @JsonKey(name: 'carbohydrates_100g') double? carbohydrates});
 }
 
 /// @nodoc
@@ -521,10 +618,10 @@ abstract class _$$NutrimentsImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'energy-kcal') double? energyKcal,
-      @JsonKey(name: 'proteins') double? proteins,
-      @JsonKey(name: 'fat') double? fat,
-      @JsonKey(name: 'carbohydrates') double? carbohydrates});
+      {@JsonKey(name: 'energy-kcal_100g') double? energyKcal,
+      @JsonKey(name: 'proteins_100g') double? proteins,
+      @JsonKey(name: 'fat_100g') double? fat,
+      @JsonKey(name: 'carbohydrates_100g') double? carbohydrates});
 }
 
 /// @nodoc
@@ -570,25 +667,25 @@ class __$$NutrimentsImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$NutrimentsImpl implements _Nutriments {
   const _$NutrimentsImpl(
-      {@JsonKey(name: 'energy-kcal') this.energyKcal,
-      @JsonKey(name: 'proteins') this.proteins,
-      @JsonKey(name: 'fat') this.fat,
-      @JsonKey(name: 'carbohydrates') this.carbohydrates});
+      {@JsonKey(name: 'energy-kcal_100g') this.energyKcal,
+      @JsonKey(name: 'proteins_100g') this.proteins,
+      @JsonKey(name: 'fat_100g') this.fat,
+      @JsonKey(name: 'carbohydrates_100g') this.carbohydrates});
 
   factory _$NutrimentsImpl.fromJson(Map<String, dynamic> json) =>
       _$$NutrimentsImplFromJson(json);
 
   @override
-  @JsonKey(name: 'energy-kcal')
+  @JsonKey(name: 'energy-kcal_100g')
   final double? energyKcal;
   @override
-  @JsonKey(name: 'proteins')
+  @JsonKey(name: 'proteins_100g')
   final double? proteins;
   @override
-  @JsonKey(name: 'fat')
+  @JsonKey(name: 'fat_100g')
   final double? fat;
   @override
-  @JsonKey(name: 'carbohydrates')
+  @JsonKey(name: 'carbohydrates_100g')
   final double? carbohydrates;
 
   @override
@@ -633,26 +730,26 @@ class _$NutrimentsImpl implements _Nutriments {
 
 abstract class _Nutriments implements Nutriments {
   const factory _Nutriments(
-          {@JsonKey(name: 'energy-kcal') final double? energyKcal,
-          @JsonKey(name: 'proteins') final double? proteins,
-          @JsonKey(name: 'fat') final double? fat,
-          @JsonKey(name: 'carbohydrates') final double? carbohydrates}) =
+          {@JsonKey(name: 'energy-kcal_100g') final double? energyKcal,
+          @JsonKey(name: 'proteins_100g') final double? proteins,
+          @JsonKey(name: 'fat_100g') final double? fat,
+          @JsonKey(name: 'carbohydrates_100g') final double? carbohydrates}) =
       _$NutrimentsImpl;
 
   factory _Nutriments.fromJson(Map<String, dynamic> json) =
       _$NutrimentsImpl.fromJson;
 
   @override
-  @JsonKey(name: 'energy-kcal')
+  @JsonKey(name: 'energy-kcal_100g')
   double? get energyKcal;
   @override
-  @JsonKey(name: 'proteins')
+  @JsonKey(name: 'proteins_100g')
   double? get proteins;
   @override
-  @JsonKey(name: 'fat')
+  @JsonKey(name: 'fat_100g')
   double? get fat;
   @override
-  @JsonKey(name: 'carbohydrates')
+  @JsonKey(name: 'carbohydrates_100g')
   double? get carbohydrates;
 
   /// Create a copy of Nutriments

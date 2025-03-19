@@ -6,5 +6,5 @@ class Desctinations {
   static const Home = '/home';
   static const Profile = '/profile';
   static const Settings = '/settings';
-
+  static const Meal = '/meal'; // Новый маршрут для MealScreen
 }

@@ -7,6 +7,8 @@ part 'product_model.g.dart';
 class ProductResponse with _$ProductResponse {
   const factory ProductResponse({
     @JsonKey(name: 'product') Product? product,
+    @JsonKey(name: 'status') int? status,
+    @JsonKey(name: 'status_verbose') String? statusVerbose,
   }) = _ProductResponse;
 
   factory ProductResponse.fromJson(Map<String, dynamic> json) =>
@@ -20,6 +22,8 @@ class Product with _$Product {
     @JsonKey(name: 'brands') String? brands,
     @JsonKey(name: 'ingredients_text') String? ingredientsText,
     @JsonKey(name: 'nutriments') Nutriments? nutriments,
+    @JsonKey(name: 'nutrition_grades') String? nutritionGrades,
+    @JsonKey(name: 'image_url') String? imageUrl, // Добавляем поле для изображения
   }) = _Product;
 
   factory Product.fromJson(Map<String, dynamic> json) => _$ProductFromJson(json);
@@ -28,10 +32,10 @@ class Product with _$Product {
 @freezed
 class Nutriments with _$Nutriments {
   const factory Nutriments({
-    @JsonKey(name: 'energy-kcal') double? energyKcal,
-    @JsonKey(name: 'proteins') double? proteins,
-    @JsonKey(name: 'fat') double? fat,
-    @JsonKey(name: 'carbohydrates') double? carbohydrates,
+    @JsonKey(name: 'energy-kcal_100g') double? energyKcal,
+    @JsonKey(name: 'proteins_100g') double? proteins,
+    @JsonKey(name: 'fat_100g') double? fat,
+    @JsonKey(name: 'carbohydrates_100g') double? carbohydrates,
   }) = _Nutriments;
 
   factory Nutriments.fromJson(Map<String, dynamic> json) =>

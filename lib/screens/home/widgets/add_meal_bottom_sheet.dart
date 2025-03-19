@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutterhelloworld/model/meal.dart';
+import 'package:flutterhelloworld/navigation/Destination.dart';
 import 'package:flutterhelloworld/screens/home/widgets/meal/manual_entry_bottom_sheet.dart';
 import 'package:flutterhelloworld/screens/home/widgets/meal/scan_barcode_bottom_sheet.dart';
 import 'package:flutterhelloworld/screens/home/widgets/meal/search_database_bottom_sheet.dart';
+import 'package:go_router/go_router.dart';
+
 class AddMealBottomSheet extends StatelessWidget {
   final Function(Meal) onAddMeal;
   final MealType mealType;
@@ -37,15 +40,15 @@ class AddMealBottomSheet extends StatelessWidget {
     );
   }
 
-  void _openSearchDatabase(BuildContext context) {
-    Navigator.pop(context);
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      builder: (context) => SearchDatabaseBottomSheet(
-        onAddMeal: onAddMeal,
-        mealType: mealType,
-      ),
+  void _openMealScreen(BuildContext context) {
+    print('Opening MealScreen with mealType: $mealType');
+    Navigator.pop(context); // Закрываем BottomSheet
+    GoRouter.of(context).push(
+      Uri(
+        path: Desctinations.Meal,
+        queryParameters: {'mealType': mealType.toString().split('.').last},
+      ).toString(),
+      extra: onAddMeal,
     );
   }
 
@@ -80,7 +83,7 @@ class AddMealBottomSheet extends StatelessWidget {
               ),
               IconButton(
                 icon: const Icon(Icons.search, size: 40),
-                onPressed: () => _openSearchDatabase(context),
+                onPressed: () => _openMealScreen(context),
                 tooltip: 'Search Database',
               ),
             ],

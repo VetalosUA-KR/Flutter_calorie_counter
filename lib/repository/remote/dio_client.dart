@@ -16,6 +16,9 @@ class DioClient {
         connectTimeout: const Duration(minutes: 1),
         receiveTimeout: const Duration(minutes: 1),
         sendTimeout: const Duration(minutes: 1),
+        headers: {
+          'User-Agent': 'MyCalorieApp/1.0 (vetal925@gmail.com)', // Добавляем User-Agent
+        },
       ),
     );
 

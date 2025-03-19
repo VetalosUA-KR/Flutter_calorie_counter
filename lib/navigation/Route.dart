@@ -1,3 +1,5 @@
+import 'package:flutterhelloworld/model/meal.dart';
+import 'package:flutterhelloworld/screens/home/searchMeal/search_meal_screen.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutterhelloworld/screens/home/HomeScreen.dart';
 import 'package:flutterhelloworld/screens/profile/ProfileScreen.dart';
@@ -23,6 +25,16 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: Desctinations.OnboardinActivityLevel,
       builder: (context, state) => const OnboardingScreen2(),
+    ),
+    GoRoute(
+      path: Desctinations.Meal,
+      builder: (context, state) => MealScreen(
+        onAddMeal: state.extra as Function(Meal), // Передаём callback через extra
+        mealType: state.uri.queryParameters['mealType'] != null
+            ? MealType.values.firstWhere(
+                (e) => e.toString() == 'MealType.${state.uri.queryParameters['mealType']}')
+            : MealType.breakfast, // Передаём mealType через query-параметр
+      ),
     ),
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) {
